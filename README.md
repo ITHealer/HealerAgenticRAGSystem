@@ -4,7 +4,7 @@ Nền tảng xử lý tài liệu và truy vấn tri thức theo mô hình RAG, 
 
 ## Show case
 
-Dưới đây là một gallery minh họa từ các ảnh trong thư mục `assets` mà tôi đã test:
+Dưới đây là một gallery minh họa mà tôi đã test:
 
 ![img-7](assets/fffce76dca0d4b53121c.jpg)
 ![img-1](assets/301082d2afb22eec77a3.jpg)
