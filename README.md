@@ -1,4 +1,4 @@
-# Document Ingestion & RAG Platform
+# Document Ingestion & RAG Platform (The same NotebookLM)
 
 Nền tảng xử lý tài liệu và truy vấn tri thức theo mô hình RAG, tập trung vào bài toán ingest tài liệu cho doanh nghiệp: upload file, parse nhiều định dạng, chuẩn hóa thành markdown/html/assets, chunking, embedding, indexing và chat hỏi đáp trên dữ liệu đã ingest.
 
