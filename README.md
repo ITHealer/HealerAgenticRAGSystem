@@ -41,7 +41,7 @@ The system is built around a modular, ingestion-first architecture:
 ## Target Architecture 
 ![img-5](assets/923f06e6c4fd45a31cec.jpg)
 
-## Show case
+## Showcase
 
 Below are tested examples from the current system:
 
