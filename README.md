@@ -1,26 +1,49 @@
-# Document Ingestion & RAG Platform (The same NotebookLM)
+# Document Ingestion & RAG Platform (NotebookLM-Style)
 
-Nền tảng xử lý tài liệu và truy vấn tri thức theo mô hình RAG, tập trung vào bài toán ingest tài liệu cho doanh nghiệp: upload file, parse nhiều định dạng, chuẩn hóa thành markdown/html/assets, chunking, embedding, indexing và chat hỏi đáp trên dữ liệu đã ingest.
+A production-oriented document intelligence platform for enterprise knowledge workflows.  
+It is designed to ingest multi-format documents, convert them into structured artifacts, build searchable knowledge bases, and support grounded question answering with citations, images, and optional knowledge graph augmentation.
 
-## Điểm nổi bật
-- Hỗ trợ pipeline end-to-end: **upload -> parse -> artifact storage -> chunk -> embedding -> vector index -> retrieval/chat**
-- Tích hợp nhiều document parser như **Docling, Marker, MinerU, PaddleOCR, MarkItDown, Chandra**
-- **Hybrid retrieval** kết hợp vector search + lexical search, có thể rerank và trả lời kèm **citation / image evidence**
-- Hỗ trợ **workspace-based knowledge base**, **ACL/phân quyền tài liệu**, **document versioning**, job tracking và analytics
-- Kiến trúc tách lớp rõ ràng: **FastAPI API + worker + parser services riêng + MinIO + PostgreSQL + Chroma/Qdrant + optional Knowledge Graph**
+## Overview
 
-## Kiến trúc
-- **Backend ingestion-focused** với API điều phối job và worker xử lý bất đồng bộ
-- **Parser services tách riêng** để scale độc lập theo loại tài liệu hoặc GPU workload
-- **Object storage** lưu file gốc và parsed artifacts, giúp dễ debug và re-index
-- **Kubernetes-ready deployment** theo mô hình separated services, phù hợp production
+This platform focuses on the full document ingestion lifecycle:
+
+**upload -> parse -> artifact storage -> chunking -> embedding -> indexing -> retrieval/chat**
+
+It supports enterprise-style document processing where raw files must be preserved, parsed outputs must remain traceable, and retrieval must stay reliable, explainable, and scalable.
+
+## Key Technical Highlights
+
+- **End-to-end ingestion pipeline** for document upload, parsing, artifact generation, chunking, embedding, indexing, and retrieval
+- **Multi-parser architecture** with support for **Docling, Marker, MinerU, PaddleOCR, MarkItDown, and Chandra**
+- **Structured parser artifact contract** using normalized outputs such as **Markdown, HTML, manifest, and extracted assets**
+- **Hybrid retrieval pipeline** combining **vector search + lexical retrieval**, with support for **reranking**
+- **Grounded chat experience** with **inline citations** and **image evidence** resolved from parsed document assets
+- **Workspace-based knowledge isolation** for multi-team or multi-domain usage
+- **Access control and document permissions** for secure collaboration
+- **Document versioning, ingestion job tracking, and analytics** for operational visibility
+- **Optional Knowledge Graph ingestion** powered by **LightRAG**
+- **Separated service architecture** designed for local development and Kubernetes deployment
+
+## Architecture
+
+The system is built around a modular, ingestion-first architecture:
+
+- **FastAPI backend** for orchestration, APIs, and retrieval workflows
+- **Asynchronous worker pipeline** for ingestion and indexing jobs
+- **Dedicated parser services** that can scale independently by parser type or compute profile
+- **MinIO / S3-compatible object storage** for original files and parsed artifacts
+- **PostgreSQL** for document metadata, jobs, ACL, and conversational state
+- **Chroma or Qdrant** for vector indexing and retrieval
+- **Optional Knowledge Graph layer** for graph-based exploration and enriched retrieval
+- **React + TypeScript frontend** for workspace management, document operations, analytics, and chat
+
 
 ## Target Architecture 
 ![img-5](assets/923f06e6c4fd45a31cec.jpg)
 
 ## Show case
 
-Dưới đây là một gallery minh họa mà tôi đã test:
+Below are tested examples from the current system:
 
 ![img-7](assets/fffce76dca0d4b53121c.jpg)
 ![img-1](assets/301082d2afb22eec77a3.jpg)
@@ -28,13 +51,23 @@ Dưới đây là một gallery minh họa mà tôi đã test:
 ![img-4](assets/6b3772ea09c3889dd1d2.jpg)
 ![img-6](assets/ab51b18ccaa54bfb12b4.jpg)
 
-**Other project: Financial Assistant**
+## Use Cases
+
+- Build an **internal knowledge base** from PDFs, scanned files, reports, SOPs, and business documents
+- Deploy a **document-grounded chatbot** with transparent citations and supporting evidence
+- Support **re-ingestion and re-indexing workflows** when changing parsers, embeddings, or retrieval strategies
+- Separate knowledge by **workspace, team, or business domain**
+- Explore extracted entities, relationships, and document insights through **analytics and knowledge graph views**
+
+## Tech Stack
+
+**Backend:** FastAPI, Python  
+**Frontend:** React, TypeScript  
+**Storage & Data:** MinIO, PostgreSQL  
+**Retrieval & Indexing:** Chroma, Qdrant, hybrid retrieval, reranking  
+**Knowledge Graph:** LightRAG  
+**Deployment:** Docker, Kubernetes
+
+
+## **Related Project: Financial Assistant**
 ![img-3](assets/375a8661f8d3768d2fc2.jpg)
-
-## Use cases có thể giải quyết
-- Xây dựng **kho tri thức nội bộ** từ PDF, tài liệu scan, report, SOP, tài liệu nghiệp vụ
-- Triển khai **chatbot hỏi đáp trên tài liệu** có dẫn nguồn rõ ràng
-- Hỗ trợ **re-ingest / re-index tài liệu** khi thay đổi parser, embedding hoặc chiến lược retrieval
-- Phân tách dữ liệu theo **workspace/team**, phù hợp cho môi trường nhiều phòng ban hoặc nhiều tập tài liệu độc lập
-
-**Tech stack:** FastAPI, Python, MinIO, PostgreSQL, Chroma/Qdrant, LightRAG, Docker, Kubernetes, React/TypeScript
